@@ -1,12 +1,11 @@
 package dev.jacbes.filesh
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dev.jacbes.filesh.databinding.FragmentDockBinding
 import dev.jacbes.filesh.historytab.HistoryFragment
 import dev.jacbes.filesh.infotab.InfoFragment
@@ -14,15 +13,10 @@ import dev.jacbes.filesh.sendtab.SendFragment
 
 class DockFragment : Fragment(R.layout.fragment_dock) {
 
-    private var _binding: FragmentDockBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentDockBinding::bind)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentDockBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSend.setOnClickListener {
             parentFragmentManager.commit {
@@ -47,13 +41,5 @@ class DockFragment : Fragment(R.layout.fragment_dock) {
                 addToBackStack(null)
             }
         }
-
-        val view = binding.root
-        return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
