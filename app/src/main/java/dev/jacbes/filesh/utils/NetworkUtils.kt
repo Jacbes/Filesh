@@ -15,19 +15,20 @@ class NetworkUtils {
     private val pictureListJsonAdapter = moshi.adapter(Pictures::class.java)
     private val pictureJsonAdapter = moshi.adapter(Picture::class.java)
 
-    fun createRequestAllObjects(): Request {
+    private fun createRequestAllObjects(): Request {
         return Request.Builder()
             .url("https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&medium=Paintings&q=art")
             .build()
     }
 
-    fun createRequestById(id: Int): Request {
+    private fun createRequestById(id: Int): Request {
         return Request.Builder()
             .url("https://collectionapi.metmuseum.org/public/collection/v1/objects/$id")
             .build()
     }
 
-    fun sendRequest(request: Request): Single<Response> {
+    fun getPictureList(): Single<Pictures> {
+        val request = createRequestAllObjects()
         return Single.create { emitter ->
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
@@ -37,8 +38,31 @@ class NetworkUtils {
 
                 override fun onResponse(call: Call, response: Response) {
                     response.use {
-                        Log.i("Hello", "onResponse in newCall ${it.body!!.string()}")
-                        emitter.onSuccess(it)
+                        val result = pictureListJsonAdapter.fromJson(it.body!!.source())
+                        if (result != null) {
+                            emitter.onSuccess(result)
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    fun getPictureById(id: Int): Single<Picture> {
+        val request = createRequestById(id)
+        return Single.create { emitter ->
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.i("Hello", "Error in newCall ${e.message.toString()}")
+                    emitter.onError(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.use {
+                        val result = pictureJsonAdapter.fromJson(it.body!!.source())
+                        if (result != null) {
+                            emitter.onSuccess(result)
+                        }
                     }
                 }
             })
