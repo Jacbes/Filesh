@@ -18,11 +18,13 @@ class SendFragment : Fragment(R.layout.fragment_send) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SendViewModel::class.java)
 
-        binding.progressBar.visibility = View.VISIBLE
-        binding.title.visibility = View.GONE
-        binding.primaryImage.visibility = View.GONE
-        binding.updateButton.visibility = View.GONE
-        viewModel.loadPicture()
+        if (viewModel.picture.value == null) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.title.visibility = View.GONE
+            binding.primaryImage.visibility = View.GONE
+            binding.updateButton.visibility = View.GONE
+            viewModel.loadPicture()
+        }
 
         binding.updateButton.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
@@ -43,8 +45,10 @@ class SendFragment : Fragment(R.layout.fragment_send) {
             Glide.with(binding.primaryImage.context)
                 .load(it.primaryImage)
                 .placeholder(R.drawable.ic_baseline_image_search_24)
-                .error(Glide.with(binding.primaryImage.context)
-                    .load(R.drawable.ic_baseline_image_not_supported_24))
+                .error(
+                    Glide.with(binding.primaryImage.context)
+                        .load(R.drawable.ic_baseline_image_not_supported_24)
+                )
                 .override(1920, 1080)
                 .into(binding.primaryImage)
         }

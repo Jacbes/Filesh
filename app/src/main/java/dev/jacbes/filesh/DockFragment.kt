@@ -19,26 +19,41 @@ class DockFragment : Fragment(R.layout.fragment_dock) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSend.setOnClickListener {
+            val findFragment = parentFragmentManager.findFragmentByTag("SEND_FRAGMENT")
             parentFragmentManager.commit {
-                replace<SendFragment>(R.id.fragment_base)
-                setReorderingAllowed(true)
                 addToBackStack(null)
+                if (findFragment != null) {
+                    replace(R.id.fragment_base, findFragment, "SEND_FRAGMENT")
+                } else {
+                    replace<SendFragment>(R.id.fragment_base, "SEND_FRAGMENT")
+                }
+                setReorderingAllowed(true)
             }
         }
 
         binding.buttonHistory.setOnClickListener {
+            val findFragment = parentFragmentManager.findFragmentByTag("HISTORY_FRAGMENT")
             parentFragmentManager.commit {
-                replace<HistoryFragment>(R.id.fragment_base)
-                setReorderingAllowed(true)
                 addToBackStack(null)
+                if (findFragment != null) {
+                    replace(R.id.fragment_base, findFragment, "HISTORY_FRAGMENT")
+                } else {
+                    replace<HistoryFragment>(R.id.fragment_base, "HISTORY_FRAGMENT")
+                }
+                setReorderingAllowed(true)
             }
         }
 
         binding.buttonInfo.setOnClickListener {
+            val findFragment = parentFragmentManager.findFragmentByTag("INFO_FRAGMENT")
             parentFragmentManager.commit {
-                replace<InfoFragment>(R.id.fragment_base)
-                setReorderingAllowed(true)
                 addToBackStack(null)
+                if (findFragment != null) {
+                    replace(R.id.fragment_base, findFragment, "INFO_FRAGMENT")
+                } else {
+                    replace<InfoFragment>(R.id.fragment_base, "INFO_FRAGMENT")
+                }
+                setReorderingAllowed(true)
             }
         }
     }

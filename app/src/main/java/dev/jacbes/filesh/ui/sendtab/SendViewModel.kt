@@ -28,7 +28,7 @@ class SendViewModel : ViewModel() {
             }
             .subscribe(
                 {
-                    Log.i("Hello", it.toString())
+//                    Log.i("Hello", it.toString())
                     setPicture(it)
                 },
                 {
