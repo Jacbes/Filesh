@@ -1,15 +1,15 @@
-package dev.jacbes.filesh.historytab
+package dev.jacbes.filesh.ui.infotab
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dev.jacbes.filesh.R
-import dev.jacbes.filesh.databinding.FragmentHistoryBinding
+import dev.jacbes.filesh.databinding.FragmentInfoBinding
 
-class HistoryFragment : Fragment(R.layout.fragment_history) {
+class InfoFragment : Fragment(R.layout.fragment_info) {
 
-    private val binding by viewBinding(FragmentHistoryBinding::bind)
+    private val binding by viewBinding(FragmentInfoBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

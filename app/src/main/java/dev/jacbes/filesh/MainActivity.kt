@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import dev.jacbes.filesh.sendtab.SendFragment
+import dev.jacbes.filesh.ui.sendtab.SendFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 

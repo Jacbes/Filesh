@@ -7,9 +7,9 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dev.jacbes.filesh.databinding.FragmentDockBinding
-import dev.jacbes.filesh.historytab.HistoryFragment
-import dev.jacbes.filesh.infotab.InfoFragment
-import dev.jacbes.filesh.sendtab.SendFragment
+import dev.jacbes.filesh.ui.historytab.HistoryFragment
+import dev.jacbes.filesh.ui.infotab.InfoFragment
+import dev.jacbes.filesh.ui.sendtab.SendFragment
 
 class DockFragment : Fragment(R.layout.fragment_dock) {
 
