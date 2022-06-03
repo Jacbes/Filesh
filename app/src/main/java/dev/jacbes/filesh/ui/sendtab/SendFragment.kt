@@ -1,13 +1,18 @@
 package dev.jacbes.filesh.ui.sendtab
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import dev.jacbes.filesh.R
+import dev.jacbes.filesh.data.PictureDatabase
 import dev.jacbes.filesh.databinding.FragmentSendBinding
+import dev.jacbes.filesh.model.Picture
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class SendFragment : Fragment(R.layout.fragment_send) {
 
@@ -17,6 +22,31 @@ class SendFragment : Fragment(R.layout.fragment_send) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SendViewModel::class.java)
+
+        val database = PictureDatabase.getInstance(requireContext()).pictureDao()
+        Log.i("HELLO", database.toString())
+        database.insertPicture(Picture(1, "", "", "", "", "", ""))
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    Log.i("HELLO", "Complete insert")
+                },
+                {
+                    Log.i("HELLO", "Error insert")
+                }
+            )
+//        database.getPictures()
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(
+//                {
+//                    Log.i("HELLO", it.toString())
+//                },
+//                {
+//                    Log.i("HELLO", "Error get list pictures")
+//                }
+//            )
 
         if (viewModel.picture.value == null) {
             binding.progressBar.visibility = View.VISIBLE
